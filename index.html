@@ -3,78 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma Mundialista Automatizada</title>
+    <title>Plataforma Mundialista Inteligente</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; background-color: #f8f9fa; padding: 20px; color: #212529; }
-        .container { background-color: white; max-width: 600px; margin: auto; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .bloque { border-bottom: 2px solid #f1f3f5; padding: 20px 0; margin-bottom: 10px; }
-        .bloque:last-child { border: none; }
-        input[type="number"] { width: 45px; padding: 8px; text-align: center; font-size: 16px; border: 1px solid #ced4da; border-radius: 6px; }
-        input[type="email"] { width: 85%; padding: 12px; margin-bottom: 15px; border: 1px solid #ced4da; border-radius: 6px; text-align: center; }
-        button { background-color: #0d6efd; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 90%; }
-        button:hover { background-color: #0b5ed7; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
-        th, td { padding: 10px; border: 1px solid #dee2e6; text-align: center; }
-        th { background-color: #e9ecef; }
-        .partido-fila { display: flex; justify-content: space-around; align-items: center; margin-bottom: 12px; font-weight: 500; }
-        .badge { background-color: #198754; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+        :root {
+            --primary: #0d6efd;
+            --primary-hover: #0b5ed7;
+            --success: #198754;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            text-align: center;
+            background-color: #f1f3f5;
+            padding: 15px;
+            margin: 0;
+            color: var(--dark);
+        }
+
+        .container {
+            background-color: white;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 24px;
+            color: var(--dark);
+        }
+
+        p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        .bloque {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        .bloque-destacado {
+            border: 1px solid #b6d4fe;
+            background-color: #f8f9ff;
+        }
+
+        .badge {
+            display: inline-block;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .partido-tarjeta {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .partido-fila {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .equipo {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+        .equipo.local { justify-content: flex-start; }
+        .equipo.visitante { justify-content: flex-end; }
+
+        .vs {
+            color: var(--gray);
+            font-size: 12px;
+            font-weight: bold;
+            padding: 0 10px;
+        }
+
+        input[type="number"] {
+            width: 50px;
+            padding: 8px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary);
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input[type="email"]:focus {
+            border-color: var(--primary);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:hover { background-color: var(--primary-hover); }
+        button:active { transform: scale(0.98); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        th {
+            background-color: #f1f3f5;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* Ventana Emergente (Modal QR) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-contenido {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            max-width: 90%;
+            width: 360px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h2>🏆 Plataforma Mundialista Inteligente</h2>
-        
-        <!-- SECCIÓN 1: MONETIZACIÓN POR INSIGHTS (MODELO FREEMIUM) -->
-        <div class="bloque" id="bloque-insights" style="background: #eef2f7; border: 1px solid #ced4da; border-radius: 10px; padding: 15px; margin-bottom: 20px;">
-            <span class="badge" style="background-color: #0d6efd; margin-bottom: 8px;">📊 IA & Estadísticas Pro</span>
-            <p style="margin: 5px 0 12px 0; font-size: 14px; color: #495057;">
-                Multiplica tus opciones de ganar. Desbloquea las probabilidades matemáticas, rendimiento histórico y predicciones de nuestro algoritmo para esta jornada.
-            </p>
-            <!-- Este botón redirige a tu pasarela de pago (Stripe/PayPal) -->
-            <button onclick="desbloquearEstadisticas()" style="background-color: #198754; width: 100%;">
-                ⚡ Desbloquear Pronósticos Inteligentes (\$1.99)
-            </button>
-        </div>
+        <h2>🏆 Quiniela Mundialista Inteligente</h2>
+        <p>Registra tus pronósticos gratis, compite en la comunidad y desbloquea datos estadísticos avanzados.</p>
 
-        <!-- BLOQUE 1: PARTIDOS DINÁMICOS DESDE LA BASE DE DATOS -->
-        <div class="bloque">
+        <!-- FORMULARIO PRINCIPAL DE LA QUINIELA -->
+        <form id="formulario-quiniela" onsubmit="procesarEnvioQuiniela(event)">
+            
+            <div class="bloque">
+                <span class="badge" style="background-color: var(--dark);">👤 Tus Datos</span>
+                <input type="email" id="user-email" placeholder="Ingresa tu correo electrónico" required>
+            </div>
+
+            <div class="bloque">
             <h3>📅 Partidos del Día</h3>
-            <div id="partidos-dinamicos">Cargando partidos activos desde la base de datos...</div>
+                <div id="partidos-dinamicos">Cargando partidos activos desde la base de datos...</div>
+            </div>
+            <!-- BOTÓN PRINCIPAL DE ACCIÓN -->
+            <button type="submit" style="background-color: var(--success); margin-bottom: 20px;">
+                🚀 Guardar y Enviar Pronósticos
+            </button>
+            <div id="mensaje-envio" style="margin-top:10px; font-weight:bold; color:#0d6efd;"></div>
+            <!-- BLOQUE 3: TABLA DE POSICIONES AUTOMÁTICA -->
+        <div class="bloque">
+            <h3>📊 Tabla de Clasificación (Top Usuarios)</h3>
+            <table id="tabla-posiciones">
+                <thead>
+                    <tr>
+                        <th>Posición</th>
+                        <th>Usuario</th>
+                        <th>Puntos Logrados</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="3">Cargando tabla de posiciones...</td></tr>
+                </tbody>
+            </table>
         </div>
 
-        <!-- SECCIÓN 2: AFILIACIÓN INTEGRADA (DESBLOQUEO DE BOTÓN REGISTRO) -->
-        <div class="bloque" id="bloque-afiliado" style="background: #fff3cd; border: 1px solid #ffeba2; border-radius: 10px; padding: 15px; margin-top: 20px;">
-            <span class="badge" style="background-color: #dc3545; margin-bottom: 8px;">🎁 Beneficio Exclusivo</span>
-            <p style="margin: 5px 0 12px 0; font-size: 14px; color: #664d03;">
-                ¡Participa gratis en la Quiniela General! Para activar tu envío de resultados, activa un bono en nuestro socio oficial regulado.
-            </p>
-            <!-- Reemplaza 'TU_ENLACE_DE_AFILIADO' por el link que te dé la plataforma de afiliación -->
-            <a href="TU_ENLACE_DE_AFILIADO" target="_blank" style="text-decoration: none;">
-                <button type="button" style="background-color: #212529; width: 100%;">
-                    🚀 Registrarse y Activar Quiniela
-                </button>
-            </a>
+        </form>
+
+        <!-- SECCIÓN DE ESTADÍSTICAS PRO CON BLUR -->
+        <div class="bloque bloque-destacado" id="seccion-estadisticas" style="overflow: hidden;">
+            
+            <!-- Capa de bloqueo visual (Paywall) -->
+            <div id="pantalla-bloqueo-ia" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(6px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; padding: 20px; box-sizing: border-box; text-align: center;">
+                <span style="font-size: 28px;">🔒</span>
+                <h4 style="margin: 8px 0 4px 0; color: var(--dark);">Insights de Inteligencia Artificial</h4>
+                <p style="font-size: 12px; margin-bottom: 12px;">Accede a las tendencias matemáticas de victoria basadas en analítica deportiva.</p>
+                <button onclick="activarSimulacionDesbloqueo()" style="background-color: var(--primary); font-size: 13px; padding: 8px 15px; width: auto;">Ver Demo Visual</button>
+            </div>
+
+           <!-- SECCIÓN DE ESTADÍSTICAS PRO DINÁMICAS -->
+        <div class="bloque bloque-destacado" id="seccion-estadisticas" style="overflow: hidden; min-height: 150px;">
+            
+            <!-- Capa de bloqueo visual (Paywall) -->
+            <div id="pantalla-bloqueo-ia" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(6px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; padding: 20px; box-sizing: border-box; text-align: center;">
+                <span style="font-size: 28px;">🔒</span>
+                <h4 style="margin: 8px 0 4px 0; color: var(--dark);">Insights de Inteligencia Artificial</h4>
+                <p style="font-size: 12px; margin-bottom: 12px;">Accede a las tendencias matemáticas de victoria basadas en analítica deportiva en tiempo real.</p>
+                <button onclick="activarSimulacionDesbloqueo()" style="background-color: var(--primary); font-size: 13px; padding: 8px 15px; width: auto;">Desbloquear con mi Pago/Registro</button>
+            </div>
+
+            <span class="badge" style="background-color: var(--primary);">📊 Tendencias Matemáticas de la IA (Live)</span>
+            <table id="tabla-insights-ia">
+                <thead>
+                    <tr>
+                        <th>Partido</th>
+                        <th>L</th>
+                        <th>E</th>
+                        <th>V</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo-tabla-ia">
+                    <!-- Los datos dinámicos de la API se inyectarán aquí automáticamente -->
+                </tbody>
+            </table>      
         </div>
-        
     </div>
 
+     <!-- CONTENEDOR MODAL PARA EL QR (Oculto por defecto) -->
+<div id="modal-qr" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 25px; border-radius: 15px; max-width: 90%; width: 400px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+        <h3>📲 Paga con QR o Transferencia</h3>
+        <p style="font-size: 14px; color: #6c757d;">Escanea para desbloquear Estadísticas Pro o activar tu Quiniela Premium (\$1.99)</p>
+        
+        <!-- Reemplaza 'tu-qr.png' por la imagen de tu QR de Deuna! o Banco de tu servidor/Vercel -->
+        <img src="C:\Users\HP\Downloads\QRCodeJD.jpeg" alt="QR de Pago" style="width: 200px; height: 200px; margin: 10px auto; border: 1px solid #dee2e6; padding: 5px; border-radius: 8px;">
+        
+        <div style="margin-top: 15px; text-align: left;">
+            <label style="font-size: 13px; font-weight: bold; color: #495057;">Número de Comprobante / Referencia:</label>
+            <input type="text" id="num-comprobante" placeholder="Ej: 4859201" style="width: 90%; padding: 10px; margin-top: 5px; border: 1px solid #ced4da; border-radius: 6px;">
+        </div>
+        
+        <button onclick="confirmarPagoQR()" style="background-color: #198754; width: 100%; margin-top: 15px;">Confirmar y Enviar</button>
+        <button onclick="cerrarModal()" style="background-color: #6c757d; width: 100%; margin-top: 8px;">Cancelar</button>
+    </div>
+  </div>
+</div>
     <script>
         // REEMPLAZA ESTA URL CON LA QUE TE GENERE GOOGLE APPS SCRIPT (PASO 2)
-        const BACKEND_URL = "https://script.google.com/macros/s/AKfycbyInb_aCNJWEDrDoP5e6o4jqaK7-A2vYN1zr-c1PnRYpiBn9AlfvS6Tdw5Bo6XbZT-v/exec";
-
+        const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxBRo5ZgE3q4hGRMm92FqDWSUGBRSi4px3pegOByrhQmXVUePaIfXFpOh69TuUFL68v/exec";
+        const LINK_AFILIADO_APUESTAS = "https://ecuabet.com//?btag=bd43ca559d522507f7f9996cf71c4c7fMqLzlGCM7JGAQVsUSLOA&utm_source=Afiliados&utm_medium=Link&utm_campaign=Javier Rolando_ParticipaGana";
         // Cargar datos al iniciar la app
         window.onload = function() {
             obtenerDatosServidor();
+            //cargarInsightsDinamicosIA();
         };
 
         // Solicitar datos (Partidos y Tabla) al Backend en la nube
         function obtenerDatosServidor() {
             fetch(BACKEND_URL + "?action=getData")
             .then(response => response.json())
-            .then(data => {
-                renderizarPartidos(data.partidos);
-                renderizarTabla(data.posiciones);
+                .then(data => {                    
+                renderizarPartidos(data.data.partidos);
+                renderizarTabla(data.data.posiciones);
             })
             .catch(err => console.error("Error cargando base de datos:", err));
         }
@@ -94,74 +330,120 @@
             });
             document.getElementById('partidos-dinamicos').innerHTML = html;
         }
-       
-    // ENLACES DE PAGO STRIPE (Crea un enlace por idioma/región en tu panel de Stripe)
-    const STRIPE_LINK_LATAM = "https://stripe.com";
-    const STRIPE_LINK_GLOBAL = "https://stripe.com";
-
-    /**
-     * 1. Redirección Automatizada para Compra de Insights (Stripe)
-     * Detecta el idioma del navegador para enviar al usuario al link correcto.
-     */
-    function desbloquearEstadisticas() {
-        const idiomaUsuario = navigator.language || navigator.userLanguage;
         
-        // Si el usuario habla español, va al link de Latam, si no, al global en inglés
-        if (idiomaUsuario.startsWith('es')) {
-            window.open(STRIPE_LINK_LATAM, '_blank');
-        } else {
-            window.open(STRIPE_LINK_GLOBAL, '_blank');
-        }
-    }
-
-    /**
-     * 2. Envío de Datos de la Quiniela a Google Sheets
-     * Captura los pronósticos y valida que el usuario acepte los términos de afiliación.
-     */
-    function enviarQuiniela(event) {
-        event.preventDefault(); // Evita que la página se recargue
-
-        const email = document.getElementById('user-email').value;
-        if (!email) {
-            alert("Por favor, ingresa tu correo electrónico para participar.");
-            return;
-        }
-
-        // Capturar los marcadores de los inputs dinámicamente
-        const pronosticos = [];
-        const filasPartidos = document.querySelectorAll('.partido-fila');
-        
-        filasPartidos.forEach((fila, index) => {
-            const inputs = fila.querySelectorAll('input[type="number"]');
-            pronosticos.push({
-                partidoId: index + 1,
-                golesLocal: inputs[0].value,
-                golesVisitante: inputs[1].value
+        function renderizarTabla(posiciones) {
+            let html = "";
+            posiciones.sort((a,b) => b.puntos - a.puntos);
+            posiciones.slice(0, 10).forEach((pos, idx) => {
+                html += `<tr><td>${idx+1}</td><td>${pos.email}</td><td><span class="badge">${pos.puntos} pts</span></td></tr>`;
             });
-        });
+            if(posiciones.length === 0) html = "<tr><td colspan='3'>Aún no hay predicciones calculadas.</td></tr>";
+            document.getElementById('tabla-posiciones').querySelector('tbody').innerHTML = html;
+        }
 
-        // Paquete de datos listo para enviar a tu base de datos de Google
-        const datosEnvio = {
-            correo: email,
-            predicciones: pronosticos,
-            timestamp: new Date().toISOString()
-        };
+       
+// INTERRUPTOR DE MODELO COMERCIAL:// Cambia a 'false' si prefieres la Opción SIN QR (100% Afiliación Gratuita con redirección automática)
+const USAR_MONETIZACION_QR = false;
+let datosTemporalesQuiniela = null;
+// Captura todos los valores ingresados en el formulario de la quiniela
+function capturarDatosFormulario() 
+{
+ const correo = document.getElementById('user-email').value;
+ document.getElementById('mensaje-envio').innerText = "Guardando predicciones...";             
+ let filas = document.querySelectorAll('.partido-fila');
+ let pronosticos = [];
+ filas.forEach(f => {
+                pronosticos.push({
+                    partido: f.getAttribute('data-partido'),
+                    resultado: f.querySelector('.gol-local').value + "-" + f.querySelector('.gol-visitante').value
+                });
+ });
+ return {correo: correo,predicciones: pronosticos,timestamp: new Date().toISOString()};
+}
 
-        // Enviar datos de forma asíncrona a Google Apps Script
-        fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', // Evita problemas de CORS con Google
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datosEnvio)
-        })
-        .then(() => {
-            alert("¡Quiniela guardada con éxito! Recuerda registrarte en nuestro socio patrocinador para activar tus puntos.");
-        })
-        .catch(error => {
-            console.error("Error al enviar:", error);
-            alert("Hubo un problema al guardar tus datos. Inténtalo de nuevo.");
-        });
+// Orquesta el flujo de envío según la estrategia comercial seleccionada
+function procesarEnvioQuiniela(event) 
+{
+ event.preventDefault();
+ datosTemporalesQuiniela = capturarDatosFormulario();
+ if (USAR_MONETIZACION_QR) 
+ {
+   // Abre pasarela manual con QR 
+   document.getElementById('modal-qr').style.display = 'flex';} 
+ else 
+ {
+   // Modelo de afiliación sin fricción
+   datosTemporalesQuiniela.comprobanteQR = "MODO_AFILIADO_GRATIS";
+   datosTemporalesQuiniela.estatusPremium = "AFILIADO";
+   enviarHaciaNubeGoogle(datosTemporalesQuiniela, () => {alert("¡Quiniela Guardada! Para validar tu puntaje, completa tu registro gratuito en nuestro patrocinador oficial.");
+   window.open(LINK_AFILIADO_APUESTAS, '_blank');});
+ }
+}
+
+function cerrarModal() {
+        document.getElementById('modal-qr').style.display = 'none';
+}
+
+    // Procesa el envío final hacia Google Sheets incluyendo el número de comprobante del QR
+    function confirmarPagoQR() {
+        const comprobante = document.getElementById('num-comprobante').value;
+        if (!comprobante) return alert("Por favor, ingresa el número de referencia de tu transferencia.");
+
+        datosTemporalesQuiniela.comprobanteQR = comprobante;
+        datosTemporalesQuiniela.estatusPremium = "PENDIENTE_REVISAR"; // Lo verificas visualmente en tu Excel
+
+        enviarHaciaNubeGoogle(datosTemporalesQuiniela, () => {alert("¡Datos enviados con éxito! Revisaremos tu comprobante para liberar tus beneficios 	Pro.");
+  	cerrarModal();});
+
     }
+
+
+// Comunicación asíncrona nativa hacia Google Sheets
+function enviarHaciaNubeGoogle(objetoDatos, callbackExito) 
+{
+  fetch(BACKEND_URL, {method: 'POST',mode: 'no-cors',headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(objetoDatos)}).then(() => {if (callbackExito) callbackExito();}).catch(err => 
+  {console.error("Error de conexión:", err);
+   alert("Ocurrió un error en la conexión. Intenta de nuevo.");});
+}
+
+ function cargarInsightsDinamicosIA() 
+ {
+       const tablaCuerpo = document.getElementById('cuerpo-tabla-ia');
+     tablaCuerpo.innerHTML = 'Cargando analítica de IA...';
+     fetch(BACKEND_URL, { method: 'GET', mode: 'cors', redirect: 'follow' }).then(res => { if (!res.ok) throw new Error("Error en red"); res.json() }).then(data => 
+       {           
+          if (data && data.objetoRespuesta.status === "success" && data.objetoRespuesta.datos.length > 0) 
+          {
+               tablaCuerpo.innerHTML = "";              
+               // Limpiar mensaje de carga
+              data.objetoRespuesta.datos.forEach(item => {
+                  const filaHtml = `<tr> <td style="text-align:left; font-weight:500;">${item.partido}</td><td><strong style="color:var(--success)">${item.probLocal}</strong></td><td style="color:var(--gray)">${item.probEmpate}</td> <td><strong style="color:var(--primary)">${item.probVisita}</strong></td> </tr> `;
+                  tablaCuerpo.innerHTML += filaHtml;
+              });
+          }
+          else { tablaCuerpo.innerHTML = 'No hay analítica disponible para esta jornada hoy.'; }
+     }).catch((error) => {
+           console.error("Fallo detallado:", error);
+           tablaCuerpo.innerHTML = 'Error al sincronizar con la API deportiva.';
+             });
+
+ }
+
+
+
+// Remueve la capa visual borrosa para pruebas o simulaciones
+function activarSimulacionDesbloqueo() 
+{
+  const bloqueo = document.getElementById('pantalla-bloqueo-ia');   
+  if (bloqueo) 
+  {
+    bloqueo.style.transition = "opacity 0.4s ease";
+    bloqueo.style.opacity = "0";
+    setTimeout(() => bloqueo.style.display = "none", 400);
+  }
+}
+
 </script>
 
 </body>
