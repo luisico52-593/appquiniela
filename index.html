@@ -236,18 +236,7 @@
 
         </form>
 
-        <!-- SECCIÓN DE ESTADÍSTICAS PRO CON BLUR -->
-        <div class="bloque bloque-destacado" id="seccion-estadisticas" style="overflow: hidden;">
-            
-            <!-- Capa de bloqueo visual (Paywall) -->
-            <div id="pantalla-bloqueo-ia" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(6px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; padding: 20px; box-sizing: border-box; text-align: center;">
-                <span style="font-size: 28px;">🔒</span>
-                <h4 style="margin: 8px 0 4px 0; color: var(--dark);">Insights de Inteligencia Artificial</h4>
-                <p style="font-size: 12px; margin-bottom: 12px;">Accede a las tendencias matemáticas de victoria basadas en analítica deportiva.</p>
-                <button onclick="activarSimulacionDesbloqueo()" style="background-color: var(--primary); font-size: 13px; padding: 8px 15px; width: auto;">Ver Demo Visual</button>
-            </div>
-
-           <!-- SECCIÓN DE ESTADÍSTICAS PRO DINÁMICAS -->
+        <!-- SECCIÓN DE ESTADÍSTICAS PRO DINÁMICAS -->
         <div class="bloque bloque-destacado" id="seccion-estadisticas" style="overflow: hidden; min-height: 150px;">
             
             <!-- Capa de bloqueo visual (Paywall) -->
@@ -255,7 +244,7 @@
                 <span style="font-size: 28px;">🔒</span>
                 <h4 style="margin: 8px 0 4px 0; color: var(--dark);">Insights de Inteligencia Artificial</h4>
                 <p style="font-size: 12px; margin-bottom: 12px;">Accede a las tendencias matemáticas de victoria basadas en analítica deportiva en tiempo real.</p>
-                <button onclick="activarSimulacionDesbloqueo()" style="background-color: var(--primary); font-size: 13px; padding: 8px 15px; width: auto;">Muy pronto disponible</button>
+                <button onclick="activarSimulacionDesbloqueo()" style="background-color: var(--primary); font-size: 13px; padding: 8px 15px; width: auto;">Acceder</button>
             </div>
 
             <span class="badge" style="background-color: var(--primary);">📊 Tendencias Matemáticas de la IA (Live)</span>
@@ -282,7 +271,7 @@
         <p style="font-size: 14px; color: #6c757d;">Escanea para desbloquear Estadísticas Pro o activar tu Quiniela Premium (\$1.99)</p>
         
         <!-- Reemplaza 'tu-qr.png' por la imagen de tu QR de Deuna! o Banco de tu servidor/Vercel -->
-        <img src="QRCodeJD.jpeg" alt="QR de Pago" style="width: 200px; height: 200px; margin: 10px auto; border: 1px solid #dee2e6; padding: 5px; border-radius: 8px;">
+        <img src="C:\Users\HP\Downloads\QRCodeJD.jpeg" alt="QR de Pago" style="width: 200px; height: 200px; margin: 10px auto; border: 1px solid #dee2e6; padding: 5px; border-radius: 8px;">
         
         <div style="margin-top: 15px; text-align: left;">
             <label style="font-size: 13px; font-weight: bold; color: #495057;">Número de Comprobante / Referencia:</label>
@@ -296,12 +285,11 @@
 </div>
     <script>
         // REEMPLAZA ESTA URL CON LA QUE TE GENERE GOOGLE APPS SCRIPT (PASO 2)
-        const BACKEND_URL = "https://script.google.com/macros/s/AKfycby27cEUX6-uz3hz9AbM5CoOM8t1pd32Chf1gZpMH0AwJgdO2YdPpbQSmqmgqXKpBE1y/exec";
+        const BACKEND_URL = "https://script.google.com/macros/s/AKfycbyhT3lGW6vLoUyRmpFb00A9A4HdPDbHTdNAB3bNzvISWLgKH2ija2iItApUI6XbWWU/exec";
         const LINK_AFILIADO_APUESTAS = "https://ecuabet.com//?btag=bd43ca559d522507f7f9996cf71c4c7fMqLzlGCM7JGAQVsUSLOA&utm_source=Afiliados&utm_medium=Link&utm_campaign=Javier Rolando_ParticipaGana";
         // Cargar datos al iniciar la app
         window.onload = function() {
-            obtenerDatosServidor();
-            //cargarInsightsDinamicosIA();
+            obtenerDatosServidor();            
         };
 
         // Solicitar datos (Partidos y Tabla) al Backend en la nube
@@ -310,7 +298,8 @@
             .then(response => response.json())
                 .then(data => {                    
                 renderizarPartidos(data.data.partidos);
-                renderizarTabla(data.data.posiciones);
+                    renderizarTabla(data.data.posiciones);
+                    cargarInsightsDinamicosIA(data.objetoRespuesta);
             })
             .catch(err => console.error("Error cargando base de datos:", err));
         }
@@ -407,26 +396,20 @@ function enviarHaciaNubeGoogle(objetoDatos, callbackExito)
    alert("Ocurrió un error en la conexión. Intenta de nuevo.");});
 }
 
- function cargarInsightsDinamicosIA() 
+ function cargarInsightsDinamicosIA(pronosticos) 
  {
-       const tablaCuerpo = document.getElementById('cuerpo-tabla-ia');
+     const tablaCuerpo = document.getElementById('cuerpo-tabla-ia');
      tablaCuerpo.innerHTML = 'Cargando analítica de IA...';
-     fetch(BACKEND_URL, { method: 'GET', mode: 'cors', redirect: 'follow' }).then(res => { if (!res.ok) throw new Error("Error en red"); res.json() }).then(data => 
-       {           
-          if (data && data.objetoRespuesta.status === "success" && data.objetoRespuesta.datos.length > 0) 
-          {
+     if (pronosticos.status === "success" && pronosticos.datos.length > 0) 
+     {
                tablaCuerpo.innerHTML = "";              
                // Limpiar mensaje de carga
-              data.objetoRespuesta.datos.forEach(item => {
-                  const filaHtml = `<tr> <td style="text-align:left; font-weight:500;">${item.partido}</td><td><strong style="color:var(--success)">${item.probLocal}</strong></td><td style="color:var(--gray)">${item.probEmpate}</td> <td><strong style="color:var(--primary)">${item.probVisita}</strong></td> </tr> `;
+              pronosticos.datos.forEach(item => {
+                  const filaHtml = `<tr> <td style="text-align:left; font-weight:500;">${item.partido}</td><td><strong style="color:var(--success)">${item.local}</strong></td><td style="color:var(--gray)">${item.empate}</td> <td><strong style="color:var(--primary)">${item.visitante}</strong></td> </tr> `;
                   tablaCuerpo.innerHTML += filaHtml;
               });
-          }
-          else { tablaCuerpo.innerHTML = 'No hay analítica disponible para esta jornada hoy.'; }
-     }).catch((error) => {
-           console.error("Fallo detallado:", error);
-           tablaCuerpo.innerHTML = 'Error al sincronizar con la API deportiva.';
-             });
+     }
+     else { tablaCuerpo.innerHTML = 'No hay analítica disponible para esta jornada hoy.'; }    
 
  }
 
